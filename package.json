@@ -1,0 +1,8 @@
+{
+  "name": "revo-static",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "start": "npx serve revo-site -l $PORT"
+  }
+}
