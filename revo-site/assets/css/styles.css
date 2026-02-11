@@ -634,3 +634,18 @@ textarea{resize: vertical}
   .btn, .reveal, .back-to-top{transition:none}
   .reveal{opacity:1; transform:none}
 }
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo-img {
+  height: 36px;          /* adjust if needed */
+  width: auto;
+  display: block;
+}
+.footer-logo {
+  height: 32px;      /* adjust if needed */
+  width: auto;
+  display: block;
+}
