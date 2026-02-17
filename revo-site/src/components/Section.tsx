@@ -5,13 +5,13 @@ import clsx from './clsx'
 export default function Section({
   children,
   className,
-  tone = 'plain',
-}: PropsWithChildren<{ className?: string; tone?: 'plain' | 'alt' | 'band' }>) {
+  tone = 'grad',
+}: PropsWithChildren<{ className?: string; tone?: 'grad' | 'grad1' | 'band' }>) {
   const bg =
-    tone === 'alt' ? 'bg-white' : tone === 'band' ? 'bg-slate-900 text-white' : 'bg-slate-50'
+    tone === 'grad1' ? 'text-white' : tone === 'band' ? 'bg-slate-900 text-white' : 'text-white'
   return (
     <section className={clsx(bg, className)}>
-      <Container className="py-14 sm:py-16">{children}</Container>
+      <Container className="py-3 sm:py-5">{children}</Container>
     </section>
   )
 }

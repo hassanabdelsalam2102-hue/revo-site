@@ -2,6 +2,9 @@ import Section from '../components/Section'
 import Card from '../components/Card'
 import Reveal from '../components/Reveal'
 import { LinkButton } from '../components/LinkButton'
+import { HighlightedButton } from '../components/Button'
+import { useNavigate } from 'react-router-dom'
+import BubbleBackground from '../components/BubbleBackground'
 
 type Expectation = [title: string, items: string[]]
 const expectations: Expectation[] = [
@@ -40,18 +43,20 @@ const metrics: Metric[] = [
 ]
 
 export default function Results() {
+  const navigate= useNavigate();
   return (
     <>
-      <Section tone="alt" className="pt-10">
+    <BubbleBackground>
+      <Section className="pt-10">
         <Reveal>
           <div className="max-w-3xl">
             <h1 className="text-3xl font-extrabold tracking-tight sm:text-5xl">Proof starts with predictable signals.</h1>
-            <p className="mt-4 text-slate-600 sm:text-lg">
+            <p className="mt-4 text-slate-300 sm:text-lg">
               Early wins look like clearer data, more real conversations, and a calmer weekly optimization loop — not
               magic overnight deals.
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
-              <LinkButton to="/contact">Book a call</LinkButton>
+              <HighlightedButton onClick={() => navigate('/contact')}>Book a Call</HighlightedButton>
               <LinkButton to="/services" variant="secondary">
                 Explore services
               </LinkButton>
@@ -64,7 +69,7 @@ export default function Results() {
         <Reveal>
           <div className="max-w-3xl">
             <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">What to expect in the first 2–4 weeks</h2>
-            <p className="mt-3 text-slate-600">
+            <p className="mt-3 text-slate-300">
               We focus on building a repeatable system and quickly learning what the market is telling you.
             </p>
           </div>
@@ -74,9 +79,9 @@ export default function Results() {
           {expectations.map(([title, items], idx) => (
             <Reveal key={`${String(title)}-${idx}`}>
               <Card>
-                <div className="text-lg font-bold">{title}</div>
-                <p className="mt-2 text-sm text-slate-600">{items[0]}</p>
-                <ul className="mt-4 space-y-2 text-sm text-slate-700">
+                <div className="text-lg font-bold text-white">{title}</div>
+                <p className="mt-2 text-sm text-slate-300">{items[0]}</p>
+                <ul className="mt-4 space-y-2 text-sm text-slate-300">
                   {items.slice(1).map((t) => (
                     <li key={t} className="flex items-start gap-2">
                       <span className="mt-0.5 inline-flex h-5 w-5 items-center justify-center rounded-full bg-slate-900 text-white text-xs">
@@ -92,60 +97,12 @@ export default function Results() {
         </div>
       </Section>
 
-      <Section tone="alt">
-        <Reveal>
-          <div className="max-w-3xl">
-            <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">Case studies (coming soon)</h2>
-            <p className="mt-3 text-slate-600">
-              We’ll add specific market breakdowns as soon as we have enough comparable runs to publish responsibly.
-            </p>
-          </div>
-        </Reveal>
 
-        <div className="mt-10 grid gap-5 md:grid-cols-2">
-          <Reveal>
-            <Card>
-              <div className="text-sm font-semibold text-slate-900">Case Study #1: Market + strategy</div>
-              <p className="mt-2 text-sm text-slate-600">
-                Placeholder — add the market, list type, approach, and what changed the conversion rate.
-              </p>
-            </Card>
-          </Reveal>
-          <Reveal>
-            <Card>
-              <div className="text-sm font-semibold text-slate-900">Case Study #2: Objections + optimization</div>
-              <p className="mt-2 text-sm text-slate-600">
-                Placeholder — highlight the top objections, the tested rebuttals, and the weekly loop improvements.
-              </p>
-            </Card>
-          </Reveal>
-        </div>
-      </Section>
-
-      <Section>
-        <Reveal>
-          <div className="max-w-3xl">
-            <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">Testimonials (placeholders)</h2>
-            <p className="mt-3 text-slate-600">Swap these with real quotes once you’re ready.</p>
-          </div>
-        </Reveal>
-
-        <div className="mt-10 grid gap-5 md:grid-cols-3">
-          {quotes.map((q) => (
-            <Reveal key={q}>
-              <Card>
-                <blockquote className="text-sm leading-relaxed text-slate-700">{q}</blockquote>
-              </Card>
-            </Reveal>
-          ))}
-        </div>
-      </Section>
-
-      <Section tone="alt">
+      <Section tone="grad1">
         <Reveal>
           <div className="max-w-3xl">
             <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">How we measure performance</h2>
-            <p className="mt-3 text-slate-600">
+            <p className="mt-3 text-slate-300">
               A simple scoreboard: activity, quality signals, and conversion — plus the feedback loop.
             </p>
           </div>
@@ -154,9 +111,9 @@ export default function Results() {
         <div className="mt-10 grid gap-5 md:grid-cols-2">
           {metrics.map(([title, items], mIdx) => (
             <Reveal key={`${String(title)}-${mIdx}`}>
-              <Card>
-                <div className="text-lg font-bold">{title}</div>
-                <ul className="mt-4 space-y-2 text-sm text-slate-700">
+              <Card className="h-full flex flex-col">
+                <div className="text-lg font-bold text-white">{title}</div>
+                <ul className="mt-4 space-y-2 text-sm text-slate-300">
                   {items.map((t) => (
                     <li key={t} className="flex items-start gap-2">
                       <span className="mt-0.5 inline-flex h-5 w-5 items-center justify-center rounded-full bg-slate-900 text-white text-xs">
@@ -172,12 +129,13 @@ export default function Results() {
         </div>
 
         <div className="mt-10 flex flex-wrap gap-3">
-          <LinkButton to="/contact">Book a call</LinkButton>
+          <HighlightedButton onClick={() => navigate('/contact')}>Book a Call</HighlightedButton>
           <LinkButton to="/how-it-works" variant="secondary">
             See the workflow
           </LinkButton>
         </div>
       </Section>
+    </BubbleBackground>
     </>
   )
 }

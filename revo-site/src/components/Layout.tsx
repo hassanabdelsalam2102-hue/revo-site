@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
+import { Link, NavLink, Outlet, useLocation, useNavigate, useRoutes } from 'react-router-dom'
 import Container from './Container'
 import clsx from './clsx'
+import { HighlightedButton } from './Button'
 
-const nav = [
+const navbuttons = [
   { to: '/', label: 'Home' },        // ✅ ADDED
   { to: '/services', label: 'Services' },
   { to: '/how-it-works', label: 'How it works' },
@@ -17,7 +18,7 @@ export default function Layout() {
   const [progress, setProgress] = useState(0)
   const location = useLocation()
   const panelRef = useRef<HTMLDivElement | null>(null)
-
+  const navigate = useNavigate();
   useEffect(() => {
     setOpen(false)
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -64,10 +65,10 @@ export default function Layout() {
   )
 
   return (
-    <div className="min-h-dvh bg-slate-50 text-slate-900">
+    <div className="min-h-dvh bg-background text-slate-900">
       {/* scroll progress */}
-      <div className="fixed left-0 top-0 z-50 h-1 w-full bg-transparent">
-        <div className="h-full bg-slate-900/80" style={{ width: `${progress}%` }} />
+      <div className="fixed top-0 left-0 z-50 w-full h-1 bg-transparent">
+        <div className="h-full bg-gradient-to-r from-[var(--accent)] to-[var(--accent2)]" style={{ width: `${progress}%` }} />
       </div>
 
       <a
@@ -77,20 +78,20 @@ export default function Layout() {
         Skip to content
       </a>
 
-      <header className="sticky top-0 z-40 border-b border-slate-200/70 bg-white/80 backdrop-blur">
-        <Container className="flex h-16 items-center justify-between">
+      <header className="sticky top-0 z-40 border-b border-slate-200/50 bg-background/90 backdrop-blur">
+        <Container className="flex items-center justify-between h-16">
           <Link to="/" className="flex items-center gap-2">
-            <img src="/assets/img/logo.png" alt="REVO" className="h-8 w-auto" />
+            <img src="/assets/img/logo.png" alt="REVO" className="w-auto h-8" />
           </Link>
 
-          <nav className="hidden items-center gap-6 md:flex">
-            {nav.map((i) => (
+          <nav className="items-center hidden gap-6 md:flex">
+            {navbuttons.map((i) => (
               <NavLink
                 key={i.to}
                 to={i.to}
                 className={({ isActive }) =>
                   clsx(
-                    'text-sm text-slate-600 hover:text-slate-900',
+                    'text-sm text-white hover:text-slate-600',
                     isActive && activeClass,
                   )
                 }
@@ -98,26 +99,16 @@ export default function Layout() {
                 {i.label}
               </NavLink>
             ))}
-            <NavLink
-              to="/contact"
-              className={({ isActive }) =>
-                clsx(
-                  'rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800',
-                  isActive && 'ring-2 ring-slate-400/50',
-                )
-              }
-            >
-              Book a call
-            </NavLink>
+              <HighlightedButton onClick={() => navigate('/contact')}>Book a call</HighlightedButton>
           </nav>
 
           <button
-            className="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white p-2 text-slate-700 shadow-sm hover:bg-slate-50 md:hidden"
+            className="inline-flex items-center justify-center shadow-sm rounded-xl text-slate-700 md:hidden"
             onClick={() => setOpen((v) => !v)}
             aria-label="Open menu"
             aria-expanded={open}
           >
-            <img src="/assets/img/burger-icon.png" alt="" className="h-5 w-5" />
+            <img src="/assets/img/burger-icon.png" alt="" className={`h-7 w-7 transition duration-200 ease-in-out ${open ? "rotate-[360deg]" : "rotate-0"}`} />
           </button>
         </Container>
 
@@ -125,9 +116,9 @@ export default function Layout() {
         {open && (
           <div className="md:hidden">
             <Container>
-              <div ref={panelRef} className="my-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+              <div ref={panelRef} className="p-4 my-3 bg-white border shadow-sm rounded-2xl border-slate-200">
                 <div className="flex flex-col gap-2">
-                  {nav.map((i) => (
+                  {navbuttons.map((i) => (
                     <NavLink
                       key={i.to}
                       to={i.to}
@@ -141,12 +132,9 @@ export default function Layout() {
                       {i.label}
                     </NavLink>
                   ))}
-                  <NavLink
-                    to="/contact"
-                    className="mt-2 rounded-xl bg-slate-900 px-3 py-2 text-center text-sm font-semibold text-white hover:bg-slate-800"
-                  >
+                 <HighlightedButton onClick={() => navigate('/contact')} >
                     Book a call
-                  </NavLink>
+                  </HighlightedButton>
                 </div>
               </div>
             </Container>
@@ -158,21 +146,21 @@ export default function Layout() {
         <Outlet />
       </main>
 
-      <footer className="border-t border-slate-200 bg-white">
+      <footer className="border-t border-slate-200 bg-gradient-to-bl from-background to-primary-600 ">
         <Container className="py-10">
           <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
             <div className="flex items-center gap-3">
-              <img src="/assets/img/logo-footer.png" alt="REVO" className="h-8 w-auto" />
+              <img src="/assets/img/logo-footer.png" alt="REVO" className="w-auto h-8" />
               <div>
-                <div className="text-sm font-semibold">REVO</div>
-                <div className="text-xs text-slate-600">Real Estate Virtual Ops</div>
+                <div className="text-sm font-semibold text-white">REVO</div>
+                <div className="text-xs text-[#B9C3E6]">Real Estate Virtual Ops</div>
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-slate-600">
-              <Link to="/privacy" className="hover:text-slate-900">Privacy</Link>
-              <Link to="/terms" className="hover:text-slate-900">Terms</Link>
-              <a href="mailto:ops@revo.example" className="hover:text-slate-900">ops@revo.example</a>
+            <div className="flex flex-wrap items-center text-sm gap-x-6 gap-y-2 text-white/75">
+              <Link to="/privacy" className="hover:text-white">Privacy</Link>
+              <Link to="/terms" className="hover:text-white">Terms</Link>
+              <a href="mailto:mim@revoeg.com" className="hover:text-white">mim@revoeg.com</a>
             </div>
           </div>
 

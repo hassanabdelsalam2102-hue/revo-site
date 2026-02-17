@@ -3,6 +3,9 @@ import Badge from '../components/Badge'
 import Card from '../components/Card'
 import Reveal from '../components/Reveal'
 import { LinkButton } from '../components/LinkButton'
+import { HighlightedButton } from '../components/Button'
+import { useNavigate } from 'react-router-dom'
+import BubbleBackground from '../components/BubbleBackground'
 
 // typed data shapes to avoid broad union inference (string | string[] etc.)
 const heroBullets: string[] = [
@@ -14,6 +17,8 @@ const heroBullets: string[] = [
 type Pillar = [string, string]
 const pillars: Pillar[] = [
   ['Operations', 'We set the workflow and manage execution so outreach runs consistently week to week.'],
+  ['Quality', 'We focus on quality checks, coaching feedback, and steady optimization — not random volume.'],
+  ['Clarity', 'You get a clear snapshot every week — what happened, what we’re hearing, and adjustment recommendations.'],
 ]
 
 type ServiceCard = [title: string, chip: string, desc: string, bullets: string[], href: string]
@@ -81,11 +86,11 @@ const faqs: Faq[] = [
   ],
   [
     'How quickly can we launch?',
-    'Most launches start after onboarding and setup. Speed depends on list readiness, script alignment, and access to your tools (dialer/SMS/CRM).',
+    'Most launches start after onboarding and setup. Speed depends on list readiness, script alignment, and legal approvals.',
   ],
   [
     'What does “weekly snapshot” include?',
-    'A simple recap of key KPIs, what we’re hearing in the market (objections), what we changed this week, and what we’ll test next.',
+    'A simple recap of key KPIs, to get an idea about the performance of your campaign. And we provide clear insights and recommendations based on many aspects.',
   ],
   [
     'What results should I expect?',
@@ -98,8 +103,10 @@ const faqs: Faq[] = [
 ]
 
 export default function Home() {
+  const navigate = useNavigate();
   return (
-    <>
+    <div>
+      <BubbleBackground>
       <Section className="pt-8 sm:pt-10">
         <div className="grid gap-10 md:grid-cols-2 md:items-center">
           <Reveal>
@@ -110,17 +117,17 @@ export default function Home() {
                 <Badge>Weekly reporting</Badge>
               </div>
 
-              <h1 className="mt-5 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
+              <h1 className="mt-5 text-3xl font-extrabold tracking-tight sm:text-5xl">
                 Outbound lead generation, run with structure.
               </h1>
 
-              <p className="mt-4 text-base leading-relaxed text-slate-600 sm:text-lg">
+              <p className="mt-4 text-base leading-relaxed text-slate-300 sm:text-lg">
                 REVO manages your cold calling and SMS outreach end-to-end — from scripts and workflows to daily
                 execution oversight. You get consistent activity, controlled processes, and clear visibility into what’s
                 happening.
               </p>
 
-              <ul className="mt-6 space-y-2 text-sm text-slate-700">
+              <ul className="mt-6 space-y-2 text-sm text-slate-200">
                 {heroBullets.map((b) => (
                   <li key={b} className="flex items-start gap-2">
                     <span className="mt-0.5 inline-flex h-5 w-5 items-center justify-center rounded-full bg-slate-900 text-white text-xs">
@@ -131,24 +138,10 @@ export default function Home() {
                 ))}
               </ul>
 
-              <div className="mt-8 flex flex-wrap gap-3">
-                <LinkButton to="/contact">Book a call</LinkButton>
+              <div className="flex flex-wrap gap-3 mt-8">
+                <HighlightedButton onClick={() => navigate('/contact')} >Book a call</HighlightedButton>
                 <LinkButton to="/services" variant="secondary">
                   See services
-                </LinkButton>
-              </div>
-
-              <div className="mt-5 flex flex-wrap gap-3 text-sm text-slate-600">
-                <LinkButton to="/contact" variant="ghost" className="px-0 py-0 hover:bg-transparent hover:underline">
-                  Book a Call
-                </LinkButton>
-                <span aria-hidden="true">•</span>
-                <LinkButton
-                  to="/how-it-works"
-                  variant="ghost"
-                  className="px-0 py-0 hover:bg-transparent hover:underline"
-                >
-                  How it works
                 </LinkButton>
               </div>
             </div>
@@ -156,31 +149,27 @@ export default function Home() {
 
           <Reveal>
             <Card className="p-0 overflow-hidden">
-              <div className="bg-gradient-to-b from-slate-900 to-slate-700 p-8 text-white">
-                <div className="text-xs font-semibold uppercase tracking-wider text-white/70">Weekly snapshot</div>
-                <div className="mt-2 text-xl font-bold">Know what happened. Know what changes next.</div>
-                <p className="mt-3 text-sm leading-relaxed text-white/80">
+              <div >
+                <div className="text-xs font-semibold tracking-wider text-white uppercase">Weekly snapshot</div>
+                <div className="mt-2 text-xl font-bold text-slate-300">Know what happened. Know what changes next.</div>
+                <p className="mt-3 text-sm leading-relaxed text-slate-200">
                   We keep the operation steady — then iterate calmly based on market feedback, objections, and list
                   performance.
                 </p>
               </div>
               <div className="p-8">
                 <div className="grid gap-4 sm:grid-cols-2">
-                  <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                    <div className="text-sm font-semibold">Activity</div>
-                    <div className="mt-1 text-sm text-slate-600">Calls/texts completed, pace, cadence</div>
+                  <div className="p-4 border rounded-2xl border-slate-200/30 bg-cta-to/20">
+                    <div className="text-sm font-semibold text-white">Activity</div>
+                    <div className="mt-1 text-sm text-slate-300">Calls/texts completed, pace, cadence</div>
                   </div>
-                  <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                    <div className="text-sm font-semibold">Quality</div>
-                    <div className="mt-1 text-sm text-slate-600">Objections, talk tracks, lead reasons</div>
+                  <div className="p-4 border rounded-2xl border-slate-200/30 bg-cta-to/20">
+                    <div className="text-sm font-semibold text-white">Insights</div>
+                    <div className="mt-1 text-sm text-slate-300">What’s working + what changes need to be done</div>
                   </div>
-                  <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                    <div className="text-sm font-semibold">Insights</div>
-                    <div className="mt-1 text-sm text-slate-600">What’s working + what changes next week</div>
-                  </div>
-                  <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                    <div className="text-sm font-semibold">Visibility</div>
-                    <div className="mt-1 text-sm text-slate-600">Simple, consistent reporting format</div>
+                  <div className="col-span-2 p-4 border rounded-2xl border-slate-200/30 bg-cta-to/20">
+                    <div className="text-sm font-semibold text-white">Visibility</div>
+                    <div className="mt-1 text-sm text-slate-300">Simple, consistent reporting format</div>
                   </div>
                 </div>
               </div>
@@ -189,22 +178,22 @@ export default function Home() {
         </div>
       </Section>
 
-      <Section tone="alt">
+      <Section tone="grad1">
         <Reveal>
           <div className="max-w-3xl">
             <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">Lead gen works better when it’s managed</h2>
-            <p className="mt-3 text-slate-600">
+            <p className="mt-3 text-slate-300">
               REVO is built around three pillars: Operations, Quality, and Clarity.
             </p>
           </div>
         </Reveal>
 
-        <div className="mt-10 grid gap-5 md:grid-cols-3">
+        <div className="grid gap-5 mt-10 md:grid-cols-3">
           {pillars.map(([title, desc], idx) => (
             <Reveal key={`${String(title)}-${idx}`}>
-              <Card>
-                <div className="text-sm font-semibold text-slate-900">{title}</div>
-                <p className="mt-2 text-sm leading-relaxed text-slate-600">{desc}</p>
+              <Card className='h-full'>
+                <div className="text-sm font-semibold text-white">{title}</div>
+                <p className="mt-2 text-sm leading-relaxed text-slate-300">{desc}</p>
               </Card>
             </Reveal>
           ))}
@@ -215,22 +204,22 @@ export default function Home() {
         <Reveal>
           <div className="max-w-3xl">
             <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">Choose the channel — we’ll run the system</h2>
-            <p className="mt-3 text-slate-600">Cold calling, SMS, or a hybrid approach with one reporting cadence.</p>
+            <p className="mt-3 text-slate-300">Cold calling, SMS, or a hybrid approach with one reporting cadence.</p>
           </div>
         </Reveal>
 
-        <div className="mt-10 grid gap-5 md:grid-cols-3">
+        <div className="grid gap-5 mt-10 md:grid-cols-3">
           {serviceCards.map(([title, chip, desc, bullets], idx) => (
             <Reveal key={`${String(title)}-${idx}`}>
               <Card>
                 <div className="flex items-start justify-between gap-4">
-                  <div className="text-lg font-bold">{title}</div>
-                  <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
+                  <div className="text-lg font-bold text-white">{title}</div>
+                  <span className="px-3 py-1 text-xs font-semibold rounded-full bg-slate-100 text-slate-700">
                     {chip}
                   </span>
                 </div>
-                <p className="mt-3 text-sm leading-relaxed text-slate-600">{desc}</p>
-                <ul className="mt-4 space-y-2 text-sm text-slate-700">
+                <p className="mt-3 text-sm leading-relaxed text-white">{desc}</p>
+                <ul className="mt-4 space-y-2 text-sm text-slate-300">
                   {bullets.map((b) => (
                     <li key={b} className="flex items-start gap-2">
                       <span className="mt-0.5 inline-flex h-5 w-5 items-center justify-center rounded-full bg-slate-900 text-white text-xs">
@@ -251,20 +240,20 @@ export default function Home() {
         </div>
       </Section>
 
-      <Section tone="alt">
+      <Section tone="grad1">
         <Reveal>
           <div className="max-w-3xl">
             <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">Fit matters (and protects results)</h2>
-            <p className="mt-3 text-slate-600">REVO works best when the investor side is ready for follow-up.</p>
+            <p className="mt-3 text-slate-300">REVO works best when the investor side is ready for follow-up.</p>
           </div>
         </Reveal>
 
-        <div className="mt-10 grid gap-5 md:grid-cols-2">
+        <div className="grid gap-5 mt-10 md:grid-cols-2">
           {fitColumns.map(([title, items], idx) => (
             <Reveal key={`${String(title)}-${idx}`}>
               <Card>
                 <div className="text-lg font-bold">{title}</div>
-                <ul className="mt-4 space-y-2 text-sm text-slate-700">
+                <ul className="mt-4 space-y-2 text-sm text-slate-300">
                   {items.map((b) => (
                     <li key={b} className="flex items-start gap-2">
                       <span className="mt-0.5 inline-flex h-5 w-5 items-center justify-center rounded-full bg-slate-900 text-white text-xs">
@@ -284,28 +273,28 @@ export default function Home() {
         <Reveal>
           <div className="max-w-3xl">
             <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">A simple 4-step launch</h2>
-            <p className="mt-3 text-slate-600">Structured setup, consistent execution, weekly optimization.</p>
+            <p className="mt-3 text-slate-300">Structured setup, consistent execution, weekly optimization.</p>
           </div>
         </Reveal>
 
-        <div className="mt-10 grid gap-5 md:grid-cols-2">
+        <div className="grid gap-5 mt-10 md:grid-cols-2">
           {launchSteps.map(([title, desc], idx) => (
             <Reveal key={`${String(title)}-${idx}`}>
-              <Card>
+              <Card className='h-full'>
                 <div className="flex items-center gap-3">
-                  <div className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-900 text-white font-bold">
+                  <div className="inline-flex items-center justify-center w-10 h-10 font-bold text-white rounded-2xl bg-slate-900">
                     {idx + 1}
                   </div>
                   <div className="text-lg font-bold">{title}</div>
                 </div>
-                <p className="mt-3 text-sm leading-relaxed text-slate-600">{desc}</p>
+                <p className="mt-3 text-sm leading-relaxed text-slate-300">{desc}</p>
               </Card>
             </Reveal>
           ))}
         </div>
       </Section>
 
-      <Section tone="band">
+      <Section tone="band" className="p-4 bg-slate-100/5">
         <Reveal>
           <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
             <div>
@@ -313,10 +302,10 @@ export default function Home() {
               <p className="mt-2 text-white/80">Book a quick call. We’ll confirm fit and outline the first 30 days.</p>
             </div>
             <div className="flex flex-wrap gap-3">
-              <LinkButton to="/contact" className="bg-white text-slate-900 hover:bg-slate-100">
+              <HighlightedButton onClick={() => navigate('/contact')} >
                 Book a call
-              </LinkButton>
-              <LinkButton to="/how-it-works" variant="ghost" className="text-white hover:bg-white/10">
+              </HighlightedButton>
+              <LinkButton to="/how-it-works" variant="secondary" className="text-gray hover:bg-white/10 hover:text-white/80">
                 How it works
               </LinkButton>
             </div>
@@ -328,26 +317,26 @@ export default function Home() {
         <Reveal>
           <div className="max-w-3xl">
             <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">FAQ</h2>
-            <p className="mt-3 text-slate-600">Clear answers so expectations stay aligned.</p>
+            <p className="mt-3 text-slate-300">Clear answers so expectations stay aligned.</p>
           </div>
         </Reveal>
 
-        <div className="mt-8 grid gap-3">
+        <div className="grid gap-3 mt-8">
           {faqs.map(([q, a], idx) => (
             <Reveal key={`${String(q)}-${idx}`}>
-              <details className="group rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-                <summary className="cursor-pointer list-none text-sm font-semibold text-slate-900">
+              <details className="p-5 border shadow-sm group rounded-2xl border-slate-200/30 bg-cta-from/10">
+                <summary className="text-lg font-semibold text-white list-none cursor-pointer">
                   <div className="flex items-center justify-between gap-4">
                     <span>{q}</span>
-                    <span className="text-slate-500 transition group-open:rotate-45">+</span>
+                    <span className="text-3xl text-transparent transition bg-gradient-cta bg-clip-text animate-pulse group-open:rotate-45">+</span>
                   </div>
                 </summary>
-                <div className="mt-3 text-sm leading-relaxed text-slate-600">{a}</div>
+                <div className="mt-3 text-sm leading-relaxed text-slate-300">{a}</div>
               </details>
             </Reveal>
           ))}
         </div>
       </Section>
-    </>
-  )
+  </BubbleBackground>
+</div>  )
 }
