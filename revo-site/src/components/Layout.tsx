@@ -18,6 +18,7 @@ export default function Layout() {
   const [progress, setProgress] = useState(0)
   const location = useLocation()
   const panelRef = useRef<HTMLDivElement | null>(null)
+  const buttonRef = useRef<HTMLButtonElement | null>(null)
   const navigate = useNavigate();
   useEffect(() => {
     setOpen(false)
@@ -47,8 +48,10 @@ export default function Layout() {
     const onClick = (e: MouseEvent) => {
       if (!open) return
       const panel = panelRef.current
-      if (!panel) return
-      if (panel.contains(e.target as Node)) return
+      const button = buttonRef.current
+      const target = e.target as Node
+      if (!panel || !button) return
+      if (panel.contains(target) || button.contains(target)) return
       setOpen(false)
     }
     window.addEventListener('keydown', onKey)
@@ -66,10 +69,7 @@ export default function Layout() {
 
   return (
     <div className="min-h-dvh bg-background text-slate-900">
-      {/* scroll progress */}
-      <div className="fixed top-0 left-0 z-50 w-full h-1 bg-transparent">
-        <div className="h-full bg-gradient-to-r from-[var(--accent)] to-[var(--accent2)]" style={{ width: `${progress}%` }} />
-      </div>
+
 
       <a
         href="#main"
@@ -78,12 +78,15 @@ export default function Layout() {
         Skip to content
       </a>
 
-      <header className="sticky top-0 z-40 border-b border-slate-200/50 bg-background/90 backdrop-blur">
+      <header className="sticky top-0 z-40 border-b border-slate-200/30 bg-background/90 backdrop-blur">
         <Container className="flex items-center justify-between h-16">
           <Link to="/" className="flex items-center gap-2">
             <img src="/assets/img/logo.png" alt="REVO" className="w-auto h-8" />
           </Link>
-
+        {/* scroll progress */}
+        <div className="fixed left-0 z-50 w-full h-1 bg-transparent top-16">
+          <div className="h-full bg-gradient-to-r from-[var(--accent)] to-[var(--accent2)]" style={{ width: `${progress}%` }} />
+        </div>
           <nav className="items-center hidden gap-6 md:flex">
             {navbuttons.map((i) => (
               <NavLink
@@ -103,9 +106,10 @@ export default function Layout() {
           </nav>
 
           <button
+            ref={buttonRef}
             className="inline-flex items-center justify-center shadow-sm rounded-xl text-slate-700 md:hidden"
             onClick={() => setOpen((v) => !v)}
-            aria-label="Open menu"
+            aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
           >
             <img src="/assets/img/burger-icon.png" alt="" className={`h-7 w-7 transition duration-200 ease-in-out ${open ? "rotate-[360deg]" : "rotate-0"}`} />
