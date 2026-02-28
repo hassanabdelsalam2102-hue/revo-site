@@ -72,18 +72,45 @@ export default function Contact() {
     return `mailto:info@revoeg.com?subject=${subject}&body=${body}`
   }, [form])
 
-  const onSubmit = (e: React.FormEvent) =>  {
-    e.preventDefault()
-    setStatus({ type: 'idle' })
+  const onSubmit = async (e: React.FormEvent) => {
+  e.preventDefault()
+  setStatus({ type: 'idle' })
 
-    if (!form.name.trim()) return setStatus({ type: 'error', msg: 'Please enter your name.' })
-    if (!isEmail(form.email)) return setStatus({ type: 'error', msg: 'Please enter a valid email address.' })
-    if (!form.market.trim()) return setStatus({ type: 'error', msg: 'Please enter your market.' })
-    if (!form.interest) return setStatus({ type: 'error', msg: 'Please choose a service interest.' })
-    if (!form.message.trim()) return setStatus({ type: 'error', msg: 'Please add a short message.' })
+  // validation
+  if (!form.name.trim()) return setStatus({ type: 'error', msg: 'Please enter your name.' })
+  if (!isEmail(form.email)) return setStatus({ type: 'error', msg: 'Please enter a valid email address.' })
+  if (!form.market.trim()) return setStatus({ type: 'error', msg: 'Please enter your market.' })
+  if (!form.interest) return setStatus({ type: 'error', msg: 'Please choose a service interest.' })
+  if (!form.message.trim()) return setStatus({ type: 'error', msg: 'Please add a short message.' })
+
+  try {
+    await fetch("https://hook.eu1.make.com/fqpikvmjaq8f0525pe4yau36tb27o6aw", {
+  method: "POST",
+  mode: "no-cors",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    name: form.name,
+    email: form.email,
+    phone: form.phone,
+    market: form.market,
+    interest: form.interest,
+    message: form.message,
+    date: new Date().toISOString(),
+  }),
+})
+
 
     setStatus({ type: 'success', msg: 'Sent! Looking forward to connecting with you.' })
+    setForm(initial)
+    localStorage.removeItem(STORAGE_KEY)
+
+  } catch (error) {
+    setStatus({ type: 'error', msg: 'Something went wrong. Please try again.' })
   }
+}
+
 
   return (
     <>
