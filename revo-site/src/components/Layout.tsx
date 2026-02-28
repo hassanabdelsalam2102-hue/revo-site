@@ -164,7 +164,7 @@ export default function Layout() {
             <div className="flex flex-wrap items-center text-sm gap-x-6 gap-y-2 text-white/75">
               <Link to="/privacy" className="hover:text-white">Privacy</Link>
               <Link to="/terms" className="hover:text-white">Terms</Link>
-              <a href="mailto:mim@revoeg.com" className="hover:text-white">mim@revoeg.com</a>
+              <a href="mailto:info@revoeg.com" className="hover:text-white">info@revoeg.com</a>
             </div>
           </div>
 

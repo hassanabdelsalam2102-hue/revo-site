@@ -107,8 +107,8 @@ export default function Privacy() {
               <div className="text-lg font-bold text-white">Contact</div>
               <p className="mt-2 text-sm text-slate-400">
                 If you have any questions about this Privacy Policy or how your data is handled, please contact us at{' '}
-                <a className="font-semibold text-gray-100 hover:underline" href="mailto:mim@revoeg.com">
-                  mim@revoeg.com
+                <a className="font-semibold text-gray-100 hover:underline" href="mailto:info@revoeg.com">
+                  info@revoeg.com
                 </a>.
               </p>
               <p className="mt-3 text-xs text-slate-500">

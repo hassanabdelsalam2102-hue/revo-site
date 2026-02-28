@@ -69,7 +69,7 @@ export default function Contact() {
         form.message || '',
       ].join('\n'),
     )
-    return `mailto:nour@revoeg.com?subject=${subject}&body=${body}`
+    return `mailto:info@revoeg.com?subject=${subject}&body=${body}`
   }, [form])
 
   const onSubmit = (e: React.FormEvent) =>  {
@@ -210,7 +210,7 @@ export default function Contact() {
                   </div>
 
                   <p className="text-xs text-slate-500">
-                    Email goes to <span className="font-semibold">nour@revoeg.com</span>
+                    Email goes to <span className="font-semibold">info@revoeg.com</span>
                   </p>
                 </form>
               </Card>
